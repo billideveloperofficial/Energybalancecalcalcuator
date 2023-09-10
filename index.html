@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Health Calculator</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="contaainer" style="max-width: 100% !important;">
+  <div class="card">
+    <h1>EATactics Energy Balance Calculator™</h1></br>
+    <div class="form-group">
+      <label for="status">Please choose if Lean Body Mass/Body Fat % is or is NOT established.</label>
+      <select id="status" class="form-control" onchange="toggleFields()">
+        <option value="not-established">Not Established</option>
+        <option value="established">Established</option>
+      </select>
+    </div> 
+
+    
+    <div id="notEstablishedFields">
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <div class="checkbox-group">
+          <input type="checkbox" id="male" name="gender" value="male" class="form-check-input" style="margin-left: 2px !important;">
+          <label for="male" class="form-check-label">
+            <span  style="margin-left: 27px !important;">Male</span>
+          </label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="female" name="gender" value="female" class="form-check-input" style="margin-left: 2px !important;">
+          <label for="female" class="form-check-label">
+            <span style="margin-left: 27px !important;">Female</span>
+          </label>
+        </div>
+      </div>
+    <div class="form-group">
+      <label for="age">Age:</label>
+      <input type="text" id="age" placeholder="Enter Age" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="height">Height:</label>
+      <div class="row">
+        <div class="col-md-6">
+          <input type="text" id="height" placeholder="Enter Height in Inches" class="form-control" oninput="convertToCentimeter()" />
+        </div>
+        
+        <div class="col-md-6">
+          <input type="text" id="heightUnit" placeholder="Height in Centimeters" class="form-control" readonly />
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="weight">Weight:</label>
+      <div class="row">
+        <div class="col-md-6">
+          <input type="text" id="weight" placeholder="Enter Weight in lbs" class="form-control" oninput="convertToKiloneter()" />
+        </div>
+        <div class="col-md-6">
+          <input type="text" id="weightUnit" placeholder="Enter Weight in Kg" class="form-control" readonly />
+        </div>
+      </div>
+    </div>
+  
+</div>
+
+    <div id="establishedFields" style="display:none">
+      <div class="form-group">
+        <label for="gender">Gender:</label>
+        <div class="checkbox-group">
+          <input type="checkbox" id="establishmale" name="gender" value="male" class="form-check-input" style="margin-left: 2px !important;">
+          <label for="male" class="form-check-label">
+            <span style="margin-left: 27px !important;">Male</span>
+          </label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="establishfemale" name="gender" value="female" class="form-check-input" style="margin-left: 2px !important;">
+          <label for="female" class="form-check-label">
+            <span style="margin-left: 27px !important;">Female</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="text" id="establishedage" placeholder="Enter Age" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="leanbody">Lean Body:</label>
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" id="leanbody" placeholder="Enter Lean Body" class="form-control" oninput="leanbody()" />
+          </div>
+          
+          <div class="col-md-6">
+            <input type="text" id="leanbodyUnit" placeholder="Lean Body in Kilogram" class="form-control" readonly />
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="fatmass">Fat Mass:</label>
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" id="fatmass" placeholder="Enter Fat Mass in lbs" class="form-control" oninput="fatmass()" />
+          </div>
+          <div class="col-md-6">
+            <input type="text" id="fatmassUnit" placeholder="Enter Fat Mass in Kg" class="form-control" readonly/>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+   
+    <div class="btn-wrapper">
+      <button type="button" class="btn btn-primary btn-lg" style="background: #6F7875 !important; border-color: #6F7875 !important;
+      color: white !important;" onclick="calculateBMR()">Check Result</button>
+    </div>
+
+  </div>
+
+  <div class="card ">
+  
+    <div id="result" style="font-size: 35px;"></div>
+  </div>
+ 
+
+  <section id="best-products">
+    <div class="contaainer">
+      <h2>Daily Energy</h2>
+      <div class="row">
+        <div class="col-md-2.5 box" >
+          <div class="card cardy">
+          
+            <div class="card-body">
+              <h5 class="card-title">Sedentary</h5>
+              <p class="sedentary"></p>
+              <p style="font-size: 18px; margin-right: -50px; margin-left: -55px; margin-bottom: 2.7rem;">Sedentary (Little or no exercise): You do not engage in regular exercise or physical activity for your job. Most of your day is likely spent sitting, with activities like working at a desk job, reading, watching television or using a computer.
+              </p>
+              <p>&nbsp;</p>
+             
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardy">
+            <div class="card-body">
+              <h5 class="card-title">Light Active</h5>
+              <p class="lightlyactive"></p>
+              <p style="font-size: 18px; margin-right: -50px; margin-left: -55px;">Lightly Active (Light exercise/sports 1-3 days/week): You engage in light physical activity or exercise a few times a week. This could involve taking a walk, participating in a yoga class or having a job that requires some degree of physical activity, like teaching.
+              </p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardy">
+            <div class="card-body">
+              <h5 class="card-title">Mod Active</h5>
+              <p class="modactive"></p>
+              <p style="font-size: 18px; margin-right: -50px; margin-left: -55px;">Moderately Active (Moderate exercise/sports 3-5 days/week): You engage in moderate physical activity or exercise most days of the week. This could be a job that requires physical labor, or consistent exercise like jogging, cycling or weightlifting.
+              </p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardy">
+            <div class="card-body">
+              <h5 class="card-title">Very Active</h5>
+              <p class="veryactive"></p>
+              <p style="    font-size: 18px; margin-right: -50px; margin-left: -55px;">Very Active (Hard exercise/sports 6-7 days a week): You engage in hard physical activity or strenuous exercise nearly every day. This could include having a physically demanding job like construction, farming or being engaged in intense workouts or sports training on a daily basis.
+              </p>
+             
+           
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardy">
+            <div class="card-body">
+              <h5 class="card-title">Extreme Active</h5>
+              <p class="extremeactive"></p>
+              <p style="font-size: 18px; margin-right: -50px; margin-left: -55px;">Extra Active (Very hard exercise/physical job & exercise 2x/day): This level of activity is common for athletes in training, individuals with physically demanding jobs who also exercise intensely, or those who engage in lengthy, vigorous exercise twice a day.</p>
+            
+              <p>&nbsp;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+  <!-- Daily Energy End  -->
+  <section id="best-products">
+    <div class="contaainer">
+      <h2>Weight Loss (Macros: 40-30-30)</h2>
+      <div class="row">
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+           
+            <div class="card-body">
+              <h5 class="card-title">Sedentary</h5>
+              <p class="carb"></p>
+              <p class="protein"></p>
+              <p class="fat"></p>
+              <p class="kcal"></p>
+              <p class="proteinoz"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Light Active</h5>
+              <p class="lightlycarb"></p>
+              <p class="lightlyprotein"></p>
+              <p class="lightlyfat"></p>
+              <p class="lightlykcal"></p>
+              <p class="lightlyproteinoz"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Mod Active</h5>
+              <p class="modcarb"></p>
+              <p class="modprotein"></p>
+              <p class="modfat"></p>
+              <p class="modkcal"></p>
+              <p class="modproteinoz"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Very Active</h5>
+              <p class="verycarb"></p>
+              <p class="veryprotein"></p>
+              <p class="veryfat"></p>
+              <p class="verykcal"></p>
+              <p class="veryproteinoz"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Extreme Active</h5>
+              <p class="extremecarb"></p>
+              <p class="extremeprotein"></p>
+              <p class="extremefat"></p>
+              <p class="extremekcal"></p>
+              <p class="extremeproteinoz"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="best-products">
+    <div class="contaainer">
+      <h2>Weight Loss (Macros: 40-40-20)</h2>
+      <div class="row">
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+           
+            <div class="card-body">
+              <h5 class="card-title">Sedentary</h5>
+              <p class="carb20"></p>
+              <p class="protein20"></p>
+              <p class="fat20"></p>
+              <p class="kcal20"></p>
+              <p class="proteinoz20"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Light Active</h5>
+              <p class="lightlycarb20"></p>
+              <p class="lightlyprotein20"></p>
+              <p class="lightlyfat20"></p>
+              <p class="lightlykcal20"></p>
+              <p class="lightlyproteinoz20"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Mod Active</h5>
+              <p class="modcarb20"></p>
+              <p class="modprotein20"></p>
+              <p class="modfat20"></p>
+              <p class="modkcal20"></p>
+              <p class="modproteinoz20"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Very Active</h5>
+              <p class="verycarb20"></p>
+              <p class="veryprotein20"></p>
+              <p class="veryfat20"></p>
+              <p class="verykcal20"></p>
+              <p class="veryproteinoz20"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Extreme Active</h5>
+              <p class="extremecarb20"></p>
+              <p class="extremeprotein20"></p>
+              <p class="extremefat20"></p>
+              <p class="extremekcal20"></p>
+              <p class="extremeproteinoz20"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="best-products">
+    <div class="contaainer">
+      <h2>Weight Maintenance (Macros: 40-30-30)</h2>
+      <div class="row">
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+           
+            <div class="card-body">
+              <h5 class="card-title">Sedentary</h5>
+              <p class="carb30"></p>
+              <p class="protein30"></p>
+              <p class="fat30"></p>
+              <p class="kcal30"></p>
+              <p class="proteinoz30"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Light Active</h5>
+              <p class="lightlycarb30"></p>
+              <p class="lightlyprotein30"></p>
+              <p class="lightlyfat30"></p>
+              <p class="lightlykcal30"></p>
+              <p class="lightlyproteinoz30"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Mod Active</h5>
+              <p class="modcarb30"></p>
+              <p class="modprotein30"></p>
+              <p class="modfat30"></p>
+              <p class="modkcal30"></p>
+              <p class="modproteinoz30"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Very Active</h5>
+              <p class="verycarb30"></p>
+              <p class="veryprotein30"></p>
+              <p class="veryfat30"></p>
+              <p class="verykcal30"></p>
+              <p class="veryproteinoz30"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2.5 box">
+          <div class="card cardt">
+            <div class="card-body">
+              <h5 class="card-title">Extreme Active</h5>
+              <p class="extremecarb30"></p>
+              <p class="extremeprotein30"></p>
+              <p class="extremefat30"></p>
+              <p class="extremekcal30"></p>
+              <p class="extremeproteinoz30"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+  <!-- Result form -->
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="custom.js"></script>
+  
+
+</body>
+</html>

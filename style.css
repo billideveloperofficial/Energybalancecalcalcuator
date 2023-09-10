@@ -1,0 +1,83 @@
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+    .card {
+      background: linear-gradient(135deg, #9BC470 0%, #F47E64 100%);
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    
+    h1 {
+      color: #ffffff;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #ffffff;
+    }
+    
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      margin-right: 5px;
+    }
+    
+    .form-check-label {
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-check-label span {
+      margin-left: 5px;
+    }
+    
+    .btn-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .box{
+      margin: 5px;
+    }
+    
+    .cardt{
+        font-size: 1.20rem;
+        width: 265.72px !important;
+      /* height: 409.98px !important; */
+      }
+      .cardy{
+      width: 265.72px !important;
+  height: 460.98px !important
+    }
